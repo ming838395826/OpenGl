@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val contain = findViewById<FrameLayout>(R.id.fl_contain)
         glSurfaceView = GLSurfaceView(this)
-        glSurfaceView.setRenderer(ThreeDRender())
+        glSurfaceView.setRenderer(LightRender())
         contain.addView(glSurfaceView)
     }
 
