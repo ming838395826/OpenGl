@@ -4,6 +4,7 @@ import android.opengl.GLSurfaceView
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
+import com.ming.opengl.util.LogUtils
 
 class MainActivity : AppCompatActivity() {
     lateinit var glSurfaceView: GLSurfaceView
