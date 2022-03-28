@@ -34,6 +34,7 @@ class StarActivity : AppCompatActivity(), View.OnTouchListener {
         setContentView(R.layout.activity_start)
         glView = findViewById(R.id.gl_view)
         glView.setOnTouchListener(this)
+        glView.setRenderer(StarRender())
     }
 
     override fun onResume() {
@@ -55,7 +56,7 @@ class StarActivity : AppCompatActivity(), View.OnTouchListener {
 
             }
         }
-        return super.onTouchEvent(event)
+        return true
     }
 
 }
