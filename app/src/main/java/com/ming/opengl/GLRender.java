@@ -8,6 +8,8 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
 
+import com.ming.opengl.util.BufferUtil;
+
 public class GLRender implements Renderer
 {
 	int one = 0x10000;

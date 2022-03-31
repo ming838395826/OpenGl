@@ -1,11 +1,10 @@
 package com.ming.opengl
 
-import java.nio.IntBuffer;
 import android.opengl.GLSurfaceView
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 import android.opengl.GLU
-import javax.microedition.khronos.opengles.GL
+import com.ming.opengl.util.BufferUtil
 
 
 class TwoDRenderer : GLSurfaceView.Renderer {

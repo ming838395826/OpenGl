@@ -1,4 +1,4 @@
-package com.ming.opengl
+package com.ming.opengl.util
 
 import java.nio.ByteBuffer
 import java.nio.ByteOrder

@@ -4,8 +4,8 @@ import android.opengl.GLSurfaceView
 import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
-import android.R.string.no
 import android.opengl.GLU
+import com.ming.opengl.util.BufferUtil
 
 
 class LightRender : GLSurfaceView.Renderer {

@@ -4,6 +4,7 @@ import android.opengl.GLSurfaceView
 import javax.microedition.khronos.opengles.GL10
 
 import android.opengl.GLU
+import com.ming.opengl.util.BufferUtil
 import java.nio.ByteBuffer
 import java.nio.FloatBuffer
 import javax.microedition.khronos.egl.EGLConfig
