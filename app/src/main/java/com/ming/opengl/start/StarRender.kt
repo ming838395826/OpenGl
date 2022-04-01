@@ -2,6 +2,7 @@ package com.ming.opengl.start
 
 import android.opengl.GLES30
 import android.opengl.GLSurfaceView
+import android.view.SurfaceView
 import com.ming.opengl.util.MatrixState
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -11,15 +12,18 @@ import javax.microedition.khronos.opengles.GL10
  * @Author ming
  * @Date 2022/3/22 23:18
  */
-class StarRender : GLSurfaceView.Renderer {
+class StarRender(private val surfaceView: SurfaceView) : GLSurfaceView.Renderer {
+
+    private var startList = mutableListOf<SixPointedStar>()
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         //设置屏幕背景色RGBA
         GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f)
         //创建六角星数组中的各个六角星
-//        for (i in 0 until ha.length) {
-//            ha.get(i) = SixPointedStar(this@MySurfaceView, 0.2f, 0.5f, -0.3f * i)
-//        }
+        repeat(6){ i ->
+            //改变z轴 观察正交相加 有没变大
+            startList.add(SixPointedStar(surfaceView, 0.2f, 0.5f, -0.3f * i))
+        }
         //打开深度检测
         GLES30.glEnable(GLES30.GL_DEPTH_TEST)
     }
@@ -39,8 +43,8 @@ class StarRender : GLSurfaceView.Renderer {
         //清除深度缓冲与颜色缓冲
         GLES30.glClear(GLES30.GL_DEPTH_BUFFER_BIT or GLES30.GL_COLOR_BUFFER_BIT)
         //循环绘制各个六角星
-//        for (h in ha) {
-//            h.drawSelf()
-//        }
+        for (item in startList) {
+            item.drawSelf()
+        }
     }
 }

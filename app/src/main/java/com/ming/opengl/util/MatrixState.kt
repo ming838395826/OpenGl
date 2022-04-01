@@ -13,7 +13,7 @@ object MatrixState {
 
     private val mVMatrix = FloatArray(16) // 摄像机位置朝向9参数矩阵
 
-    private val mMVPMatrix: FloatArray? = null// 最后起作用的总变换矩阵
+    private var mMVPMatrix: FloatArray? = null// 最后起作用的总变换矩阵
 
     //设置摄像机的方法
     fun setCamera(
@@ -52,5 +52,15 @@ object MatrixState {
             bottom, top,  //near面的bottom、top
             near, far //near面、far面与视点的距离
         )
+    }
+
+    //获取具体物体的总变换矩阵
+    fun getFinalMatrix(spec: FloatArray?): FloatArray? { //生成物体总变换矩阵的方法
+        mMVPMatrix = FloatArray(16) //创建用来存放最终变换矩阵的数组
+        //将摄像机矩阵乘以变换矩阵
+        Matrix.multiplyMM(mMVPMatrix, 0, mVMatrix, 0, spec, 0)
+        //将投影矩阵乘以上一步的结果矩阵得到最终变换矩阵
+        Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mMVPMatrix, 0)
+        return mMVPMatrix
     }
 }

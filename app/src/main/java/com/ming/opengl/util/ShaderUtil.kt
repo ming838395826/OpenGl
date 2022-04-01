@@ -1,6 +1,7 @@
 package com.ming.opengl.util
 
 import android.content.res.Resources
+import android.opengl.GLES20
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.lang.Exception

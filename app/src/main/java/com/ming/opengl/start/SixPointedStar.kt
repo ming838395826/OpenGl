@@ -4,6 +4,7 @@ import android.opengl.GLES30
 import android.opengl.Matrix
 import android.view.SurfaceView
 import com.ming.opengl.util.BufferUtil
+import com.ming.opengl.util.MatrixState
 import com.ming.opengl.util.ShaderUtil
 import java.lang.Math.toRadians
 import java.nio.FloatBuffer
@@ -17,9 +18,9 @@ import kotlin.math.*
 /**
  * 大的半径，小的半劲，z轴大小
  */
-class SixPointedStar(val surfaceView: SurfaceView, r: Float, R: Float, z: Float) {
+class SixPointedStar(private val surfaceView: SurfaceView, r: Float, R: Float, z: Float) {
 
-    val UNIT_SIZE = 1f
+    private val UNIT_SIZE = 1f
 
     private lateinit var mVertexShader: String//顶点着色器代码脚本
     private lateinit var mFragmentShader: String//片元着色器代码脚本
@@ -32,7 +33,7 @@ class SixPointedStar(val surfaceView: SurfaceView, r: Float, R: Float, z: Float)
     private lateinit var mVertexBuffer: FloatBuffer
     private lateinit var mColorBuffer: FloatBuffer
     var mMMatrix = FloatArray(16) //具体物体的3D变换矩阵，包括旋转、平移、缩放
-    var vCount = 0
+    var vCount = 12
     var mYAngle = 0f //绕y轴旋转的角度
     var mXAngle = 0f //绕x轴旋转的角度
 
@@ -131,5 +132,31 @@ class SixPointedStar(val surfaceView: SurfaceView, r: Float, R: Float, z: Float)
         Matrix.rotateM(mMMatrix,0,mYAngle,0f,1f,0f)
         //设置绕x轴旋转xAngle度
         Matrix.rotateM(mMMatrix,0,mXAngle,1f,0f,0f)
+        //将最终变换矩阵传入渲染管线
+        GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(mMMatrix), 0)
+        //将顶点位置数据送入渲染管线
+        GLES30.glVertexAttribPointer(
+            maPositionHandle,
+            3,
+            GLES30.GL_FLOAT,
+            false,
+            3 * 4,
+            mVertexBuffer
+        )
+        //将顶点颜色数据送入渲染管线
+        GLES30.glVertexAttribPointer(
+            maColorHandle,
+            4,
+            GLES30.GL_FLOAT,
+            false,
+            4 * 4,
+            mColorBuffer
+        )
+        //启用顶点位置数据数组
+        GLES30.glEnableVertexAttribArray(maPositionHandle)
+        //启用顶点颜色数据数组
+        GLES30.glEnableVertexAttribArray(maColorHandle)
+        //绘制六角星(顶点数)
+        GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, vCount)
     }
 }

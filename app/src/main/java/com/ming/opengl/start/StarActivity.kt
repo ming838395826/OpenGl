@@ -34,7 +34,7 @@ class StarActivity : AppCompatActivity(), View.OnTouchListener {
         setContentView(R.layout.activity_start)
         glView = findViewById(R.id.gl_view)
         glView.setOnTouchListener(this)
-        glView.setRenderer(StarRender())
+        glView.setRenderer(StarRender(glView))
     }
 
     override fun onResume() {
