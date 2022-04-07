@@ -14,7 +14,10 @@ import com.ming.opengl.util.LogUtils
  */
 class HomeActivity : AppCompatActivity() {
 
-    var listData = arrayListOf(Pair(ClickType.START_ORTHO,"星星正交矩阵"))
+    var listData = arrayListOf(
+        Pair(ClickType.START_ORTHO, "星星正交相机"),
+        Pair(ClickType.START_FRUSTUM, "星星透视相机")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

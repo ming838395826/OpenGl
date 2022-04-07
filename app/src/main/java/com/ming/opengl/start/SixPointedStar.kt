@@ -33,9 +33,10 @@ class SixPointedStar(private val surfaceView: SurfaceView, r: Float, R: Float, z
     private lateinit var mVertexBuffer: FloatBuffer
     private lateinit var mColorBuffer: FloatBuffer
     var mMMatrix = FloatArray(16) //具体物体的3D变换矩阵，包括旋转、平移、缩放
-    var vCount = 12
+    var vCount = 12 * 3 //一共12个三角形 各自 3个顶点
     var mYAngle = 0f //绕y轴旋转的角度
     var mXAngle = 0f //绕x轴旋转的角度
+    var mZAngle = 0f //绕Z轴旋转的角度
 
 
     init {
@@ -91,7 +92,7 @@ class SixPointedStar(private val surfaceView: SurfaceView, r: Float, R: Float, z
         //生成颜色数组
         val colorList = mutableListOf<Float>()
         //因为xyz 得到所有顶点的数量
-        repeat(vertexList.size / 3) { index ->
+        repeat(vertexList.size / 3) {
             //中心点为白色，RGBA 4个通道[1,1,1,0]\
             //边上的点为淡蓝色，RGBA 4个通道[0.45,0.75,0.75,0]
             //第一个点是圆点 其他是其他颜色
@@ -132,6 +133,8 @@ class SixPointedStar(private val surfaceView: SurfaceView, r: Float, R: Float, z
         Matrix.rotateM(mMMatrix,0,mYAngle,0f,1f,0f)
         //设置绕x轴旋转xAngle度
         Matrix.rotateM(mMMatrix,0,mXAngle,1f,0f,0f)
+        //设置绕Z轴旋转xAngle度
+        Matrix.rotateM(mMMatrix,0,mZAngle,0f,0f,1f)
         //将最终变换矩阵传入渲染管线
         GLES30.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(mMMatrix), 0)
         //将顶点位置数据送入渲染管线

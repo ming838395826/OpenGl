@@ -12,16 +12,18 @@ import javax.microedition.khronos.opengles.GL10
  * @Author ming
  * @Date 2022/3/22 23:18
  */
-class StarRender(private val surfaceView: SurfaceView) : GLSurfaceView.Renderer {
+class StarRender(private val surfaceView: SurfaceView, val cameraType: Int) :
+    GLSurfaceView.Renderer {
 
-    private var startList = mutableListOf<SixPointedStar>()
+    var startList = mutableListOf<SixPointedStar>()
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         //设置屏幕背景色RGBA
         GLES30.glClearColor(0.5f, 0.5f, 0.5f, 1.0f)
         //创建六角星数组中的各个六角星
-        repeat(6){ i ->
+        repeat(6) { i ->
             //改变z轴 观察正交相加 有没变大
+            //0.5相对于整个视图的大小
             startList.add(SixPointedStar(surfaceView, 0.2f, 0.5f, -0.3f * i))
         }
         //打开深度检测
@@ -31,11 +33,16 @@ class StarRender(private val surfaceView: SurfaceView) : GLSurfaceView.Renderer 
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
         val ratio = width.toFloat() / height
-        GLES30.glViewport(0, 0,width,height)
-        //设置透视投影
-        MatrixState.setProjectOrtho(-ratio, ratio, -1f, 1f, 1f, 10f)
+        GLES30.glViewport(0, 0, width, height)
+        if (cameraType == 0) {
+            //设置正交投影
+            MatrixState.setProjectOrtho(-ratio, ratio, -1f, 1f, 1f, 10f)
+        } else {
+            //设置透视投影
+            MatrixState.setProjectFrustum(-ratio * 0.4f, ratio * 0.4f, -1 * 0.4f, 1 * 0.4f, 1f, 50f)
+        }
         //设置摄像机
-        MatrixState.setCamera(0f,0f,6f,0f,0f,0f,0f,1.0f,0.0f)
+        MatrixState.setCamera(0f, 0f, 6f, 0f, 0f, 0f, 0f, 1.0f, 0.0f)
     }
 
 

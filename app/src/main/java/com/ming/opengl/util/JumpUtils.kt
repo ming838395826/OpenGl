@@ -16,6 +16,9 @@ object JumpUtils {
             ClickType.START_ORTHO -> {
                 StarActivity.open(context, 0)
             }
+            ClickType.START_FRUSTUM -> {
+                StarActivity.open(context, 1)
+            }
         }
     }
 }

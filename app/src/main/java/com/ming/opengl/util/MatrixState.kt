@@ -54,6 +54,18 @@ object MatrixState {
         )
     }
 
+    //设置透视投影
+    fun setProjectFrustum(
+        left: Float,  // near面的left
+        right: Float,  // near面的right
+        bottom: Float,  // near面的bottom
+        top: Float,  // near面的top
+        near: Float,  // near面与视点的距离
+        far: Float // far面与视点的距离
+    ) {
+        Matrix.frustumM(mProjMatrix, 0, left, right, bottom, top, near, far)
+    }
+
     //获取具体物体的总变换矩阵
     fun getFinalMatrix(spec: FloatArray?): FloatArray? { //生成物体总变换矩阵的方法
         mMVPMatrix = FloatArray(16) //创建用来存放最终变换矩阵的数组

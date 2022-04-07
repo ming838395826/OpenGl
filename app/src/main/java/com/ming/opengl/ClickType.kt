@@ -6,6 +6,7 @@ package com.ming.opengl
  * @Author ming
  * @Date 2022/3/21 23:34
  */
-enum class ClickType() {
-    START_ORTHO()
+enum class ClickType {
+    START_ORTHO,
+    START_FRUSTUM
 }
