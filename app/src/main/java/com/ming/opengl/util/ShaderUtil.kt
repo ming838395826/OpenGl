@@ -17,7 +17,7 @@ import java.lang.RuntimeException
  */
 object ShaderUtil {
     //从sh脚本中加载shader内容的方法
-    fun loadFromAssetsFile(fname: String?, r: Resources): String {
+    fun loadFromAssetsFile(fname: String, r: Resources): String {
         var result = ""
         try {
             val `in`: InputStream = r.assets.open(fname)
